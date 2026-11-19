@@ -13,10 +13,10 @@ import InvoicesPage from './pages/Invoices'
 import SettingsPage from './pages/Settings'
 
 // Demo build mein yeh 4 pages shamil hi nahi hote
-const GetPaidPage = import.meta.env.VITE_MODE === 'demo' ? null : lazy(() => import('./pages/GetPaid'))
-const PaymentsPage = import.meta.env.VITE_MODE === 'demo' ? null : lazy(() => import('./pages/Payments'))
-const ReportsPage = import.meta.env.VITE_MODE === 'demo' ? null : lazy(() => import('./pages/Reports'))
-const BackupPage = import.meta.env.VITE_MODE === 'demo' ? null : lazy(() => import('./pages/Backup'))
+const GetPaidPage = lazy(() => import('./pages/GetPaid'))
+const PaymentsPage = lazy(() => import('./pages/Payments'))
+const ReportsPage = lazy(() => import('./pages/Reports'))
+const BackupPage = lazy(() => import('./pages/Backup'))
 
 const NAV_GROUPS = [
   { title: 'Overview', items: [
