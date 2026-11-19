@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+dist-demo/
+dist-full/
+
+# Env files jo secret ho sakti hain (local overrides)
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Vite / cache
+node_modules/.vite/
+.vite/
+*.tsbuildinfo
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test / coverage
+coverage/
+
+# Local backups aur private files
+backup-*.json
+*.zip
