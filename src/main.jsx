@@ -8,3 +8,5 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+// Browser ko batao ke is app ka data apne aap delete na kare
+if (__APP_MODE__ === 'full') navigator.storage?.persist?.()
