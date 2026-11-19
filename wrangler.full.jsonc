@@ -1,0 +1,8 @@
+{
+  "name": "tn-demo-k27",
+  "compatibility_date": "2025-11-01",
+  "assets": {
+    "directory": "./dist-full",
+    "not_found_handling": "single-page-application"
+  }
+}
