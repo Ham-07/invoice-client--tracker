@@ -4,6 +4,8 @@ import {
   money, invoiceTotals, invoiceStatus, daysLate, todayStr,
   buildReminder, openMailClient,
 } from '../utils'
+import {  useState } from 'react'
+import EmailModal from '../EmailModal'
 
 const BUCKETS = [
   { id: 'notdue', label: 'Not yet due', color: 'var(--paid)' },
@@ -20,6 +22,7 @@ function bucketOf(late) {
 }
 
 export default function GetPaidPage({ data, setData, onOpenInvoice }) {
+  const [reminder, setReminder] = useState(null)
   const cur = data.settings.currency
   const clientOf = id => data.clients.find(c => c.id === id)
 
@@ -39,16 +42,26 @@ export default function GetPaidPage({ data, setData, onOpenInvoice }) {
     .filter(i => i.status === 'Pending' && i.late >= -14)
     .sort((a, b) => a.dueDate.localeCompare(b.dueDate))
 
-  const remind = inv => {
-    const client = clientOf(inv.clientId)
-    if (!client?.email && !window.confirm('This client has no email address. Open your email app anyway?')) return
-    openMailClient(buildReminder(inv, client, data.settings, inv.balance))
-    setData(d => ({
-      ...d,
-      invoices: d.invoices.map(i => (i.id === inv.id ? { ...i, lastReminder: todayStr() } : i)),
-    }))
-  }
+  // const remind = inv => {
+  //   const client = clientOf(inv.clientId)
+  //   if (!client?.email && !window.confirm('This client has no email address. Open your email app anyway?')) return
+  //   openMailClient(buildReminder(inv, client, data.settings, inv.balance))
+  //   setData(d => ({
+  //     ...d,
+  //     invoices: d.invoices.map(i => (i.id === inv.id ? { ...i, lastReminder: todayStr() } : i)),
+  //   }))
+  // }
 
+const remind = inv => {
+  const client = clientOf(inv.clientId)
+  setReminder({ id: inv.id, email: buildReminder(inv, client, data.settings, inv.balance) })
+}
+
+const markReminded = id =>
+  setData(d => ({
+    ...d,
+    invoices: d.invoices.map(i => (i.id === id ? { ...i, lastReminder: todayStr() } : i)),
+  }))
   return (
     <div className="grid gap-4">
       <section className="card p-5">
@@ -147,6 +160,13 @@ export default function GetPaidPage({ data, setData, onOpenInvoice }) {
           </table>
         )}
       </section>
+      {reminder && (
+  <EmailModal
+    email={reminder.email}
+    onClose={() => setReminder(null)}
+    onSent={() => markReminded(reminder.id)}
+  />
+)}
     </div>
   )
 }

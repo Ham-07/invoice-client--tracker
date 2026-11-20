@@ -193,3 +193,10 @@
 .badge-pending { color: var(--pending); background: color-mix(in srgb, var(--pending) 16%, transparent); }
 .badge-overdue { color: var(--overdue); background: color-mix(in srgb, var(--overdue) 14%, transparent); }
 .badge-draft   { color: var(--draft);   background: color-mix(in srgb, var(--draft) 18%, transparent); }
+button, select, summary, [role="button"], a[href] { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+  color: #fff !important;
+}

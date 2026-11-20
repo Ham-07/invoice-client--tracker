@@ -122,3 +122,12 @@ Thank you,
 ${settings.businessName}`,
   }
 }
+
+export function composeUrl(provider, { to, subject, body }) {
+  const q = encodeURIComponent
+  if (provider === 'gmail')
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=${q(to)}&su=${q(subject)}&body=${q(body)}`
+  if (provider === 'outlook')
+    return `https://outlook.live.com/mail/0/deeplink/compose?to=${q(to)}&subject=${q(subject)}&body=${q(body)}`
+  return `mailto:${q(to)}?subject=${q(subject)}&body=${q(body)}`
+}

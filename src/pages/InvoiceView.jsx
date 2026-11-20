@@ -5,6 +5,7 @@ import {
   buildEmail, openMailClient, copyText,
 } from '../utils'
 import { IS_DEMO } from '../mode'
+import EmailModal from '../EmailModal'
 
 const STATUS_BADGE = {
   Paid: 'badge-paid', Pending: 'badge-pending',
@@ -25,6 +26,7 @@ export default function InvoiceView({ invoiceId, data, setData, onBack, onEdit }
   const [pay, setPay] = useState({ amount: '', date: todayStr(), method: 'Bank transfer', note: '' })
   const [error, setError] = useState('')
   const [copied, setCopied] = useState(false)
+  const [emailOpen, setEmailOpen] = useState(false)
 
   if (!inv) return null
 
@@ -91,10 +93,11 @@ export default function InvoiceView({ invoiceId, data, setData, onBack, onEdit }
     setTimeout(() => setCopied(false), 2000)
   }
 
-  const handleEmail = () => {
-    if (!client?.email && !window.confirm('This client has no email address. Open your email app anyway?')) return
-    openMailClient(email)
-  }
+  // const handleEmail = () => {
+  //   if (!client?.email && !window.confirm('This client has no email address. Open your email app anyway?')) return
+  //   openMailClient(email)
+  // }
+  const handleEmail = () => setEmailOpen(true)
 
     const demoLock = () =>
     window.alert('Print / Save as PDF and Send email are available in the full version.')
@@ -297,6 +300,7 @@ export default function InvoiceView({ invoiceId, data, setData, onBack, onEdit }
 
         {error && <p className="mt-3 text-sm font-medium" style={{ color: 'var(--overdue)' }}>{error}</p>}
       </section>
+      {emailOpen && <EmailModal email={email} onClose={() => setEmailOpen(false)} />}
     </div>
   )
 }

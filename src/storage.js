@@ -45,6 +45,10 @@ export function load() {
   }
 }
 
+// export function load() {
+//   return merge(buildDemoData())   // sirf recording ke liye, baad mein hata dena
+// }
+
 export function save(data) {
   if (IS_DEMO) return // demo mein kuch save nahi hota
   try { localStorage.setItem(KEY, JSON.stringify(data)) }
